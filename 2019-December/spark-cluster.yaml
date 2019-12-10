@@ -1,0 +1,28 @@
+kind: Template
+apiVersion: v1
+template: var-spark-cluster
+metadata:
+  name: var-spark-cluster
+  annotations:
+    openshift.io/display-name: "Value at Risk Spark Cluster"
+    description: "An Apache Spark cluster crafted for the value at risk demonstrations."
+objects:
+
+- apiVersion: radanalytics.io/v1
+  kind: SparkCluster
+  metadata:
+    name: ${CLUSTER_NAME}
+  spec:
+    customImage: "docker.io/elmiko/openshift-spark:training"
+    worker:
+      instances: ${WORKER_COUNT}
+    master:
+      instances: "1"
+
+parameters:
+  - name: CLUSTER_NAME
+    description: the cluster name
+    value: var-cluster
+  - name: WORKER_COUNT
+    description: number of workers in spark cluster
+    value: "1"
